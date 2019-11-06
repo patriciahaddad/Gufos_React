@@ -22,6 +22,29 @@ create-react-app gufos_react
 ```
 > Quando precisar paramos a aplicação com **CTRL+C** e **S**
 
+<br><br>
+
+## Desenvolvendo a aplicação
+
+> Alteramos o arquivo App.js para incluir o título da Home e um Rodapé:
+
+```jsx
+import React from 'react';
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+      <h1>Home</h1>
+      <footer>Escola SENAI de Informática</footer>
+    </div>
+  );
+}
+
+export default App;
+```
+
+
 
 
 <br><br><br><br><br><br>

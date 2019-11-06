@@ -1,3 +1,30 @@
+# GUFOS - Agenda de Eventos - React JS
+
+## Requisitos
+> - Node Js
+> - Visual Studio Code
+
+## Criação do Ambiente
+> Instalamos globalmente nosso acesso ao create-react-app
+
+```bash
+npm install -g create-react-app
+```
+## Criação do Projeto
+> Criamos nosso projeto:
+```bash
+create-react-app gufos_react
+```
+> Testamos nosso projeto:
+```bash
+  cd gufos_react
+  npm start
+```
+> Quando precisar paramos a aplicação com **CTRL+C** e **S**
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

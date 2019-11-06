@@ -44,6 +44,144 @@ function App() {
 export default App;
 ```
 
+> Criamos a seguinte estrutura: src -> pages -> Categorias. E criar o arquivo Categorias.js dentro da pasta acabada de criar.
+
+> Em *Categorias.js* colocamos a seguinte estrutura:
+```jsx
+import React, { Component } from 'react';
+
+class Categorias extends Component {
+    render(){
+        return(
+            <div>
+                <h1>Categorias</h1>
+                <footer>Escola SENAI de Informática</footer>
+            </div>
+        );
+    }
+}
+
+export default Categorias;
+```
+
+<br><br>
+
+> Para realizar o acesso a diferentes rotas, instalamos o react-router:
+```bash
+npm install --save react-router-dom
+```
+
+> O *index.js* possui toda a parte de roteamento e configuração. Vamos alterar esse arquivo para fazer com que as duas páginas sejam acessadas dessa forma:
+- localhost:3000/
+- localhost:3000/categorias
+<br>
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
+
+
+// Importamos as dependências necessárias:
+import {Route, BrowserRouter as Router} from 'react-router-dom';
+
+// Importamos a página de Categorias:
+import Categorias from './pages/Categorias/Categorias';
+
+// Realizamos a criação das Rotas:
+const Rotas = (
+    <Router>
+        <div>
+            <Route exact path="/" component={App} />
+            <Route path="/categorias" component={Categorias} />
+        </div>
+    </Router>
+)
+
+// Trocamos ao App padrão pelas nossas rotas
+ReactDOM.render(Rotas, document.getElementById('root'));
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();
+```
+> Rodamos a aplicação e testamos se as 2 urls estão funcionando corretamente:
+- localhost:3000/
+- localhost:3000/categorias
+
+> Como os dois componentes/páginas possuem o Rodapé, podemos criar um outro componente externo a fim de facilitar as futuras modificações e/ou alterações.
+
+> Para isso criamos a seguinte estrutura:
+ - src -> componentes -> Rodape -> criar um arquivo Rodape.js.
+
+> Dentro deste arquivo colocamos a seguinte estrutura:
+```jsx
+import React from 'react';
+
+function Rodape(){
+    return <footer>Escola SENAI de Informática</footer>
+}
+
+export default Rodape;
+```
+
+>Dentro do arquivo *App.js*, comentamos o rodapé que tinha fixo e incluímos o novo:
+```jsx
+import React from 'react';
+import './App.css';
+// Importamos nosso componente
+import Rodape from './components/Rodape/Rodape';
+
+function App() {
+  return (
+    <div className="App">
+      <h1>Home</h1>
+      <Rodape />
+      {/* <footer>Escola SENAI de Informática</footer> */}
+    </div>
+  );
+}
+
+export default App;
+```
+
+> Fazemos o mesmo em *Categorias.js* :
+```jsx
+import React, { Component } from 'react';
+import Rodape from '../../components/Rodape/Rodape';
+
+class Categorias extends Component {
+    render(){
+        return(
+            <div className="App">
+                <h1>Categorias</h1>
+                <Rodape />
+            </div>
+        );
+    }
+}
+
+export default Categorias;
+```
+
+> Rodamos a aplicação e verificamos o resultado.
+> Com a aplicação rodando, testamos o componente incluindo o ano:
+```jsx
+import React from 'react';
+
+function Rodape(){
+    return <footer>Escola SENAI de Informática - 2019</footer>
+}
+
+export default Rodape;
+```
+
+
+
+
 
 
 

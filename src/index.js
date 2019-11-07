@@ -4,19 +4,29 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+// Importamos os estilos:
+import './assets/css/flexbox.css';
+import './assets/css/reset.css';
+import './assets/css/style.css';
+
+
 
 // Importamos as dependências necessárias:
-import {Route, BrowserRouter as Router} from 'react-router-dom';
+import {Route, BrowserRouter as Router, Switch} from 'react-router-dom';
 
-// Importamos a página de Categorias:
+// Importamos as páginas criadas
 import Categorias from './pages/Categorias/Categorias';
+import NaoEncontrada from './pages/NaoEncontrada/NaoEncontrada';
 
 // Realizamos a criação das Rotas:
 const Rotas = (
     <Router>
         <div>
-            <Route exact path="/" component={App} />
-            <Route path="/categorias" component={Categorias} />
+            <Switch>
+                <Route exact path="/" component={App} />
+                <Route path="/categorias" component={Categorias} />
+                <Route component={NaoEncontrada} />
+            </Switch>
         </div>
     </Router>
 )

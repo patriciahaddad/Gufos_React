@@ -23,9 +23,9 @@ const Rotas = (
     <Router>
         <div>
             <Switch>
-                <Route exact path="/" component={App} />
-                <Route path="/categorias" component={ () => <Categorias titulo_logo="Logo do Gufos" /> } />
-                <Route component={NaoEncontrada} />
+                <Route exact path="/" component={ () => <App titulo_pagina="Inicio | Gufos" /> } />
+                <Route path="/categorias" component={ () => <Categorias titulo_pagina="Categorias | Gufos" /> } />
+                <Route component={ () => <NaoEncontrada titulo_pagina="404 | Gufos" /> } />
             </Switch>
         </div>
     </Router>

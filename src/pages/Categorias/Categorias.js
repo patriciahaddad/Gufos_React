@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Rodape from '../../components/Rodape/Rodape';
 
+import {Link} from 'react-router-dom';
+
 // Importamos nosso logo dos Assets
 import logo from '../../assets/img/icon-login.png';
 
@@ -23,8 +25,22 @@ class Categorias extends Component {
             .then(data => this.setState( {lista: data } ));
     }
 
+    componentWillMount(){
+        document.title = this.props.titulo_pagina;
+        console.log('Will');
+    }
+
     componentDidMount(){
+        console.log('Did');
         this.listaAtualizada();
+    }
+
+    componentDidUpdate(){
+        console.log("Update");
+    }
+
+    componentWillUnmount(){
+        console.log("Unmount")
     }
 
     render(){
@@ -32,7 +48,8 @@ class Categorias extends Component {
             <div className="App">
                 <header className="cabecalhoPrincipal">
                     <div className="container">
-                    <img src={logo} alt={this.props.titulo_logo} />
+                    <img src={logo} alt="Logo Gufos" />
+                    <Link to="/">Voltar</Link>
 
                     <nav className="cabecalhoPrincipal-nav">
                         Administrador
@@ -60,7 +77,7 @@ class Categorias extends Component {
                                         <tr key={categoria.categoriaId}>
                                             <td>{categoria.categoriaId}</td>
                                             <td>{categoria.titulo}</td>
-                                            <td>Alterar/Excluir</td>
+                                            <td></td>
                                         </tr>
                                     );
                                 })

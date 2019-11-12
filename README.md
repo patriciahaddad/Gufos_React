@@ -374,18 +374,55 @@ export default Categorias;
 > Rodamos a aplicação e verificamos o resultado.
 > Com a aplicação rodando, testamos o componente incluindo o ano no Rodapé
 
-<br>
+<br><br><br>
+
+
+# Ciclos de Vida
+
+> Em *Categorias.js* importamos o *Link* do react-router-dom:
+```jsx
+import {Link} from 'react-router-dom';
+```
+> Em seguida, colocamos um Link para voltar para a home, em baixo do logo do Gufos:
+```jsx
+<Link to="/">Voltar</Link>
+```
+
+> Em *Categorias.js* colocamos os seguintes ciclos:
+```jsx
+    componentWillMount(){
+        console.log('Will');
+    }
+
+    componentDidMount(){
+        console.log('Did');
+    }
+
+    componentDidUpdate(){
+        console.log("Update");
+    }
+
+    componentWillUnmount(){
+        console.log("Unmount")
+    }
+```
+> No console testamos os primeiros 3, que são muito parecidos, e depois clicamos no link *Voltar* para notar que o Unmount foi acionado
+
+
+# Props e States
 
 > Para passar uma Prop nas rotas , usamos uma arrow function :
 ```jsx
 // Declaração na index.js
-<Route path="/categorias" component={ () => <Categorias titulo_logo="Logo do Gufos" /> } />
+<Route path="/categorias" component={ () => <Categorias titulo_pagina="Categorias | Gufos" /> } />
 ```
 ```jsx
-// Chamada em Categorias.js
-<img src={logo} alt={this.props.titulo_logo} />
+// Chamada em Categorias.js , dentro do ciclo willMount
+componentWillMount(){
+    document.title = this.props.titulo_pagina;
+    console.log('Will');
+}
 ```
-
 
 <br><br>
 

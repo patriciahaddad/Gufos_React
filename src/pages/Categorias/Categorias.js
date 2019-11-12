@@ -32,7 +32,7 @@ class Categorias extends Component {
             <div className="App">
                 <header className="cabecalhoPrincipal">
                     <div className="container">
-                    <img src={logo} alt="logo do Gufos" />
+                    <img src={logo} alt={this.props.titulo_logo} />
 
                     <nav className="cabecalhoPrincipal-nav">
                         Administrador

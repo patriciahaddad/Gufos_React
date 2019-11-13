@@ -29,10 +29,14 @@ class Categorias extends Component {
            headers : { 
                "Content-Type" : "application/json"
            }
-        }).then(response => response.json())
-          .then(this.listaAtualizada())
-          .catch(error => console.log(error))
-
+        })
+        .then(response => response.json())
+        .then(response => {
+            console.log(response);
+            this.listaAtualizada();
+            this.setState( () => ({ lista: this.state.lista }));
+        })
+        .catch(error => console.log(error))
     }
 
     listaAtualizada = () =>{

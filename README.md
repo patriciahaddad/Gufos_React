@@ -44,7 +44,7 @@ function App() {
 export default App;
 ```
 
-> Criamos a seguinte estrutura: src -> pages -> Categorias. E criar o arquivo Categorias.js dentro da pasta acabada de criar.
+> Criamos a seguinte estrutura: src -> pages -> Categorias. E criar o arquivo Categorias.js dentro da pasta acabada de criar. <br>
 
 > Em *Categorias.js* colocamos a seguinte estrutura:
 ```jsx
@@ -71,7 +71,8 @@ export default Categorias;
 npm install --save react-router-dom
 ```
 
-> O *index.js* possui toda a parte de roteamento e configuração. Vamos alterar esse arquivo para fazer com que as duas páginas sejam acessadas dessa forma:
+> O *index.js* possui toda a parte de roteamento e configuração.  <br>
+> Vamos alterar esse arquivo para fazer com que as duas páginas sejam acessadas dessa forma:
 - localhost:3000/
 - localhost:3000/categorias
 <br>
@@ -108,7 +109,7 @@ ReactDOM.render(Rotas, document.getElementById('root'));
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
 ```
-> Rodamos a aplicação e testamos se as 2 urls estão funcionando corretamente:
+> Rodamos a aplicação e testamos se as 2 urls estão funcionando corretamente: <br>
 - localhost:3000/
 - localhost:3000/categorias
 
@@ -163,8 +164,8 @@ ReactDOM.render(Rotas, document.getElementById('root'));
 serviceWorker.unregister();
 ```
 
-> Com os arquivos de "gufos-base" em mãos, copiamos a pasta *assets* para dentro de *src*
-> Depois pegamos nosso *<header>* e *<main>*, e colocamos dentro de *Categorias.js*, e alteramos tudo de *class* para *className*
+> Com os arquivos de "gufos-base" em mãos, copiamos a pasta *assets* para dentro de *src* <br>
+> Depois pegamos nosso *<header>* e *<main>*, e colocamos dentro de *Categorias.js*, e alteramos tudo de *class* para *className* <br>
 > Além disso, importamos nosso logo dos assets para usálo como variável:
 ```jsx
 import React, { Component } from 'react';
@@ -254,10 +255,11 @@ import './assets/css/style.css';
 
 ## Componetização
 
-> Como os dois componentes/páginas possuem o Rodapé, podemos criar um outro componente externo a fim de facilitar as futuras modificações e/ou alterações.
+> Como os dois componentes/páginas possuem o Rodapé, podemos criar um outro componente 
+> externo a fim de facilitar as futuras modificações e/ou alterações. <br>
 
-> Para isso criamos a seguinte estrutura:
- - src -> componentes -> Rodape -> criar um arquivo Rodape.js.
+> Para isso criamos a seguinte estrutura: <br>
+> - src -> componentes -> Rodape -> criar um arquivo Rodape.js. <br>
 
 > Dentro deste arquivo colocamos a seguinte estrutura:
 ```jsx
@@ -371,7 +373,7 @@ class Categorias extends Component {
 export default Categorias;
 ```
 
-> Rodamos a aplicação e verificamos o resultado.
+> Rodamos a aplicação e verificamos o resultado. <br>
 > Com a aplicação rodando, testamos o componente incluindo o ano no Rodapé
 
 <br><br><br>
@@ -406,11 +408,24 @@ import {Link} from 'react-router-dom';
         console.log("Unmount")
     }
 ```
-> No console testamos os primeiros 3, que são muito parecidos, e depois clicamos no link *Voltar* para notar que o Unmount foi acionado
+> No console testamos os primeiros 3, que são muito parecidos, e depois clicamos no link *Voltar* para notar que o Unmount foi acionado <br>
 
+> Mostramos o Warning referente ao componentWillMount, e abrimos na documentação do React sobre a descontinuação: <br>
+> [https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html](https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html)
 
-# Props e States
+> Comitamos o que fizemos até agora para poder prosseguir sem erros <br>
+> Após isto damos o seguinte comando , segundo documentação :
 
+```bash
+npx react-codemod rename-unsafe-lifecycles
+```
+
+> Ele vai perguntar quais arquivos desejamos verificar, colocamos **. (ponto)** para que ele pegue todos <br>
+> Depois selecionamos a opção ***> Javascript*** <br>
+> Note que agora o cliclo foi renomeado automaticamente para : *UNSAFE_componentWillMount()* <br>
+
+# Props e State
+## Props
 > Para passar uma Prop nas rotas , usamos uma arrow function :
 ```jsx
 // Declaração na index.js
@@ -424,10 +439,7 @@ componentWillMount(){
 }
 ```
 
-<br><br>
-
-## Consumindo a API
-
+# State
 > Criamos uma lista fixa de objeto para testarmos, dentro de um método construtor, passada via state:
 ```jsx
     constructor(){
@@ -458,8 +470,16 @@ componentWillMount(){
                             }
                         </tbody>
 ```
+> Link para quem quiser entender melhor de MAP , FILTER e REDUCE: <br>
+[https://medium.com/@programadriano/javascript-conhecendo-map-filter-e-reduce-ce072d8f0ec5]
+(https://medium.com/@programadriano/javascript-conhecendo-map-filter-e-reduce-ce072d8f0ec5)
 
-> Antes de prosseguir, devemos comentar o HTTPS redirection no backend, e nos certificarmos de que o Cors está habilitado...
+
+<br><br>
+
+# Consumindo a API
+# GET
+> Antes de prosseguir, devemos comentar o HTTPS redirection no backend, e nos certificarmos de que o Cors está habilitado... <br>
 > Alteramos para fazermos a chamada de API, utilizando fetch:
 ```jsx
     constructor(){
@@ -483,3 +503,76 @@ componentWillMount(){
         this.listaAtualizada();
     }
 ```
+# POST
+> Criamos um novo atributo, chamado *nome* em nosso construtor, além disso já criamos nosso método para cadastrar a categoria:
+```jsx
+    constructor(){
+        super();
+        this.state = {
+            lista : [],
+            nome : ""
+        }
+    }
+
+    cadastrarCategoria(event){
+        event.preventDefault();
+        console.log("Cadastrando");
+        console.log(this.state.nome);
+    }
+```
+> No form colocamos nosso evento:
+```jsx
+<form onSubmit={this.cadastrarCategoria}>
+```
+> Após isto testamos e notamos que vai dar erro, pos não fizemos a ligação dos contextos do método com *bind* <br>
+> Portanto, dentro do construtor, declaramos:
+```jsx
+    constructor(){
+        super();
+        this.state = {
+            lista : [],
+            nome : ""
+        }
+
+        this.cadastrarCategoria = this.cadastrarCategoria.bind(this);
+    }
+```
+> Notamos agora, que o erro sumiu, mas ainda assim precisamos capturar os valores corretos do state, quando ele for alterado <br>
+> Para isto, criamos o seguinte método:
+```jsx
+    atualizaNome(input){
+        this.setState({ nome : input.target.value })
+    }
+```
+> No nosso input colocamos o *value* e o evento *onChange*:
+```jsx
+    <input
+        type="text"
+        className="class__categoria"
+        id="input__categoria"
+        placeholder="tipo do evento"
+        value={this.state.nome}
+        onChange={this.atualizaNome.bind(this)}
+    />
+```
+
+> Agora, criamos nossa requisição **POST**:
+```jsx
+    cadastrarCategoria(event){
+        event.preventDefault();
+        console.log("Cadastrando");
+        console.log(this.state.nome);
+
+        fetch("http://localhost:5000/api/categoria", {
+           method : "POST",
+           body: JSON.stringify({ titulo : this.state.nome }),
+           headers : { 
+               "Content-Type" : "application/json"
+           }
+        }).then(response => response.json())
+          .then(this.listaAtualizada())
+          .catch(error => console.log(error))
+
+    }
+```
+

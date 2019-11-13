@@ -11,12 +11,28 @@ class Categorias extends Component {
     constructor(){
         super();
         this.state = {
-            lista : []
-            //     {idCategoria: 1, titulo: "Design"},
-            //     {idCategoria: 2, titulo: "Jogos"},
-            //     {idCategoria: 3, titulo: "Meetup"}
-            // ]
+            lista : [],
+            nome : ""
         }
+
+        this.cadastrarCategoria = this.cadastrarCategoria.bind(this);
+    }
+
+    cadastrarCategoria(event){
+        event.preventDefault();
+        console.log("Cadastrando");
+        console.log(this.state.nome);
+
+        fetch("http://localhost:5000/api/categoria", {
+           method : "POST",
+           body: JSON.stringify({ titulo : this.state.nome }),
+           headers : { 
+               "Content-Type" : "application/json"
+           }
+        }).then(response => response.json())
+          .then(this.listaAtualizada())
+          .catch(error => console.log(error))
+
     }
 
     listaAtualizada = () =>{
@@ -25,7 +41,11 @@ class Categorias extends Component {
             .then(data => this.setState( {lista: data } ));
     }
 
-    componentWillMount(){
+    atualizaNome(input){
+        this.setState({ nome : input.target.value })
+    }
+
+    UNSAFE_componentWillMount(){
         document.title = this.props.titulo_pagina;
         console.log('Will');
     }
@@ -90,14 +110,18 @@ class Categorias extends Component {
                         <h2 className="conteudoPrincipal-cadastro-titulo">
                         Cadastrar Categoria
                         </h2>
-                        <form>
+                        <form onSubmit={this.cadastrarCategoria}>
                         <div className="container">
+
                             <input
-                            type="text"
-                            className="class__categoria"
-                            id="input__categoria"
-                            placeholder="tipo do evento"
+                                type="text"
+                                className="class__categoria"
+                                id="input__categoria"
+                                placeholder="tipo do evento"
+                                value={this.state.nome}
+                                onChange={this.atualizaNome.bind(this)}
                             />
+
                             <button
                             id="btn__cadastrar"
                             className="conteudoPrincipal-btn conteudoPrincipal-btn-cadastro"

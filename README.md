@@ -439,7 +439,7 @@ componentWillMount(){
 }
 ```
 
-# State
+## State
 > Criamos uma lista fixa de objeto para testarmos, dentro de um método construtor, passada via state:
 ```jsx
     constructor(){

@@ -21,11 +21,9 @@ class Categorias extends Component {
     }
 
     cadastrarCategoria(event){
+
         event.preventDefault();
         console.log("Cadastrando");
-        console.log(this.state.nome);
-
-        this.setState( {loading: true} )
 
         fetch("http://localhost:5000/api/categoria", {
            method : "POST",
@@ -39,7 +37,6 @@ class Categorias extends Component {
             console.log(response);
             this.listaAtualizada();
             this.setState( () => ({ lista: this.state.lista }));
-            this.setState( {loading: false} )
         })
         .catch(error => console.log(error))
     }
@@ -54,13 +51,16 @@ class Categorias extends Component {
         this.setState( {loading: false} )    
     }
 
-    deletarCategoria(event){
-        event.preventDefault();
-        console.log("Excluindo");
+    alterarCategoria = (produto) => {
+        console.log(produto);
+    }
 
+    deletarCategoria = (id) =>{
+
+        console.log("Excluindo");
         this.setState( {loading: true} ) 
         
-        fetch("http://localhost:5000/api/categoria/"+event.target.value, {
+        fetch("http://localhost:5000/api/categoria/"+id, {
            method : "DELETE",
            headers : { 
                "Content-Type" : "application/json"
@@ -144,8 +144,8 @@ class Categorias extends Component {
                                             <td>{categoria.categoriaId}</td>
                                             <td>{categoria.titulo}</td>
                                             <td>
-                                                <button onClick={this.alterarCategoria} value={categoria.categoriaId}>Alterar</button>
-                                                <button onClick={this.deletarCategoria} value={categoria.categoriaId}>Excluir</button>
+                                                <button onClick={e => this.alterarCategoria(categoria)}>Alterar</button>
+                                                <button onClick={e => this.deletarCategoria(categoria.categoriaId)}>Excluir</button>
                                             </td>
                                         </tr>
                                     );

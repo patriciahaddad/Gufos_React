@@ -583,11 +583,11 @@ componentWillMount(){
 # DELETE
 > Incluímos nosso método, copiando do *POST* e alterando alguns parâmetros:
 ```jsx
-    deletarCategoria(event){
-        event.preventDefault();
+    deletarCategoria = (id) =>{
 
         console.log("Excluindo");
-        fetch("http://localhost:5000/api/categoria/"+event.target.value, {
+        
+        fetch("http://localhost:5000/api/categoria/"+id, {
            method : "DELETE",
            headers : { 
                "Content-Type" : "application/json"
@@ -600,6 +600,7 @@ componentWillMount(){
             this.setState( () => ({ lista: this.state.lista }));
         })
         .catch(error => console.log(error))
+
     }
 ```
 
@@ -628,7 +629,7 @@ componentWillMount(){
                                             <td>{categoria.categoriaId}</td>
                                             <td>{categoria.titulo}</td>
                                             <td>
-                                                <button onClick={this.deletarCategoria} value={categoria.categoriaId}>Excluir</button>
+                                                <button onClick={e => this.deletarCategoria(categoria.categoriaId)}>Excluir</button>
                                             </td>
                                         </tr>
                                     );

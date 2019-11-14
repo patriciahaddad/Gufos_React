@@ -12,7 +12,8 @@ class Categorias extends Component {
         super();
         this.state = {
             lista : [],
-            nome : ""        
+            nome : "",
+            loading: false       
         }
 
         this.cadastrarCategoria = this.cadastrarCategoria.bind(this);
@@ -23,6 +24,8 @@ class Categorias extends Component {
         event.preventDefault();
         console.log("Cadastrando");
         console.log(this.state.nome);
+
+        this.setState( {loading: true} )
 
         fetch("http://localhost:5000/api/categoria", {
            method : "POST",
@@ -36,19 +39,26 @@ class Categorias extends Component {
             console.log(response);
             this.listaAtualizada();
             this.setState( () => ({ lista: this.state.lista }));
+            this.setState( {loading: false} )
         })
         .catch(error => console.log(error))
     }
 
     listaAtualizada = () =>{
+        this.setState( {loading: true} )
+
         fetch("http://localhost:5000/api/categoria")
             .then(response => response.json())
             .then(data => this.setState( {lista: data } ));
+        
+        this.setState( {loading: false} )    
     }
 
     deletarCategoria(event){
         event.preventDefault();
         console.log("Excluindo");
+
+        this.setState( {loading: true} ) 
         
         fetch("http://localhost:5000/api/categoria/"+event.target.value, {
            method : "DELETE",
@@ -63,6 +73,8 @@ class Categorias extends Component {
             this.setState( () => ({ lista: this.state.lista }));
         })
         .catch(error => console.log(error))
+
+        this.setState( {loading: false} ) 
     }
 
     atualizaNome(input){
@@ -79,6 +91,10 @@ class Categorias extends Component {
         this.listaAtualizada();
     }
 
+    componentWillUpdate(){
+        console.log("WillUpdate");
+    }
+
     componentDidUpdate(){
         console.log("Update");
     }
@@ -88,6 +104,9 @@ class Categorias extends Component {
     }
 
     render(){
+
+        let {loading} = this.state;
+
         return(
             <div className="App">
                 <header className="cabecalhoPrincipal">
@@ -104,6 +123,9 @@ class Categorias extends Component {
                 <main className="conteudoPrincipal">
                     <section className="conteudoPrincipal-cadastro">
                     <h1 className="conteudoPrincipal-cadastro-titulo">Categorias</h1>
+
+                    <h2>{ loading && <i className="fa fa-spin fa-spinner"></i> }</h2>
+
                     <div className="container" id="conteudoPrincipal-lista">
                         <table id="tabela-lista">
                         <thead>

@@ -580,3 +580,60 @@ componentWillMount(){
     }
 ```
 
+# DELETE
+> Incluímos nosso método, copiando do *POST* e alterando alguns parâmetros:
+```jsx
+    deletarCategoria(event){
+        event.preventDefault();
+
+        console.log("Excluindo");
+        fetch("http://localhost:5000/api/categoria/"+event.target.value, {
+           method : "DELETE",
+           headers : { 
+               "Content-Type" : "application/json"
+           }
+        })
+        .then(response => response.json())
+        .then(response => {
+            console.log(response);
+            this.listaAtualizada();
+            this.setState( () => ({ lista: this.state.lista }));
+        })
+        .catch(error => console.log(error))
+    }
+```
+
+> Ddepois damos o *bind* deste método no construtor:
+```jsx
+    constructor(){
+        super();
+        this.state = {
+            lista : [],
+            nome : ""
+        }
+
+        this.cadastrarCategoria = this.cadastrarCategoria.bind(this);
+        this.deletarCategoria   = this.deletarCategoria.bind(this);
+    }
+```
+
+> Dentro da nossa lista no *map*, damos o *bind* no *map* inteiro para poder chamar nosso método de exclusão <br>
+> Além disso, incluímos nosso botão de acção e seu evento *onClick*:
+```jsx
+                        <tbody id="tabela-lista-corpo">
+                            {
+                                this.state.lista.map(function(categoria){
+                                    return (
+                                        <tr key={categoria.categoriaId}>
+                                            <td>{categoria.categoriaId}</td>
+                                            <td>{categoria.titulo}</td>
+                                            <td>
+                                                <button onClick={this.deletarCategoria} value={categoria.categoriaId}>Excluir</button>
+                                            </td>
+                                        </tr>
+                                    );
+                                }.bind(this))
+                            }
+                        </tbody>
+```
+

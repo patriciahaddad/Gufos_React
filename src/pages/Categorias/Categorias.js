@@ -12,10 +12,11 @@ class Categorias extends Component {
         super();
         this.state = {
             lista : [],
-            nome : ""
+            nome : ""        
         }
 
         this.cadastrarCategoria = this.cadastrarCategoria.bind(this);
+        this.deletarCategoria   = this.deletarCategoria.bind(this);
     }
 
     cadastrarCategoria(event){
@@ -43,6 +44,25 @@ class Categorias extends Component {
         fetch("http://localhost:5000/api/categoria")
             .then(response => response.json())
             .then(data => this.setState( {lista: data } ));
+    }
+
+    deletarCategoria(event){
+        event.preventDefault();
+        console.log("Excluindo");
+        
+        fetch("http://localhost:5000/api/categoria/"+event.target.value, {
+           method : "DELETE",
+           headers : { 
+               "Content-Type" : "application/json"
+           }
+        })
+        .then(response => response.json())
+        .then(response => {
+            console.log(response);
+            this.listaAtualizada();
+            this.setState( () => ({ lista: this.state.lista }));
+        })
+        .catch(error => console.log(error))
     }
 
     atualizaNome(input){
@@ -101,10 +121,13 @@ class Categorias extends Component {
                                         <tr key={categoria.categoriaId}>
                                             <td>{categoria.categoriaId}</td>
                                             <td>{categoria.titulo}</td>
-                                            <td></td>
+                                            <td>
+                                                <button onClick={this.alterarCategoria} value={categoria.categoriaId}>Alterar</button>
+                                                <button onClick={this.deletarCategoria} value={categoria.categoriaId}>Excluir</button>
+                                            </td>
                                         </tr>
                                     );
-                                })
+                                }.bind(this))
                             }
                         </tbody>
                         </table>

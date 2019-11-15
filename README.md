@@ -638,3 +638,198 @@ componentWillMount(){
                         </tbody>
 ```
 
+# PUT
+> Instalamos a biblioteca Material Design Bootstrap React, acessando pelo Google e seguindo os passos:
+```bash
+npm install --save mdbreact
+```
+> Importamos para o *index.js* 
+```jsx
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
+```
+
+> Depois rodamos nossa aplicação novamente.
+```bash
+npm start
+```
+
+> No site do MDB(Material Design Bootstrap), entramos no link do Modal, e copiamos o seguinte trecho para o nosso código:
+```jsx
+// Import lá no topo:
+import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
+
+// modal como false, no state
+this.state = {
+    lista : [],
+    nome : "",
+    loading: false,
+    modal: false    
+}
+
+// O método Toggle
+toggle = () => {
+  this.setState({
+    modal: !this.state.modal
+  });
+}
+
+// Modal antes do Rodapé, com o botão comentado
+<MDBContainer>
+    {/* <MDBBtn onClick={this.toggle}>Modal</MDBBtn> */}
+    <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
+    <MDBModalHeader toggle={this.toggle}>MDBModal title</MDBModalHeader>
+    <MDBModalBody>
+        (...)
+    </MDBModalBody>
+    <MDBModalFooter>
+        <MDBBtn color="secondary" onClick={this.toggle}>Close</MDBBtn>
+        <MDBBtn color="primary">Save changes</MDBBtn>
+    </MDBModalFooter>
+    </MDBModal>
+</MDBContainer>
+```
+
+> Depois nosso método alterarCategoria deve ter o toggle dentro dele
+```jsx
+    alterarCategoria = (produto) => {        
+        console.log(produto);
+
+        // Abrir Modal
+        this.toggle();
+    }
+```
+> Colocamos o State editarModal :
+```jsx
+        this.state = {
+            lista : [],
+            nome : "",
+            loading: false,
+            modal: false,
+            editarModal : {
+                categoriaId: "",
+                titulo: ""
+            }          
+        }
+```
+
+> Dentro de *alterarCategoria* setamos o State de *editarModal* :
+```jsx
+    alterarCategoria = (produto) => {
+        console.log(produto);
+
+        this.setState({
+            editarModal: {
+                  categoriaId : produto.categoriaId,
+                  titulo: produto.titulo
+            }
+        })
+
+        // Abrir Modal
+        this.toggle();
+    }
+```
+
+> E no Header do Modal colocamos para mostrar a categoria a ser editada:
+```jsx
+<MDBModalHeader toggle={this.toggle}>Editar <b>{this.state.editarModal.titulo}</b> </MDBModalHeader>
+```
+
+> Abraçamos nosso Container do Modal com um form, e mudamos os textos dos botões, além de inserir o type="submit" no botão Alterar:
+```jsx
+        <MDBContainer>
+            {/* <MDBBtn onClick={this.toggle}>Modal</MDBBtn> */}
+            <form>
+                <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
+                    <MDBModalHeader toggle={this.toggle}>Editar <b>{this.state.editarModal.titulo}</b> </MDBModalHeader>
+                <MDBModalBody>
+                        
+                </MDBModalBody>
+                <MDBModalFooter>
+                    <MDBBtn color="secondary" onClick={this.toggle}>Fechar</MDBBtn>
+                    <MDBBtn color="primary" type="submit">Alterar</MDBBtn>
+                </MDBModalFooter>
+                </MDBModal>
+            </form>
+        </MDBContainer>
+```
+
+> Agora vamos incluir o input do MDB
+```jsx
+// Damos o import, pode ser só o MDBInput, dentro do já importado mdbreact
+import { MDBInput } from "mdbreact";
+
+// Colocamos o input dentro do Body do Modal:
+<MDBInput label="Categoria" value={this.state.editarModal.titulo} />
+```
+
+> Ao fazer isso podemos notar que não conseguimos mexer no input, portanto precisamos criar o método a seguir:
+```jsx
+    atualizaEditarModalTitulo(input){
+        this.setState({ 
+            editarModal: {
+                categoriaId : this.state.editarModal.id,
+                titulo: input.target.value
+            }
+        })
+    }
+```
+> E aplicar em nosso input, no evento onChange:
+```jsx
+                <MDBContainer>
+                    {/* <MDBBtn onClick={this.toggle}>Modal</MDBBtn> */}
+                    <form>
+                        <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
+                            <MDBModalHeader toggle={this.toggle}>Editar <b>{this.state.editarModal.titulo}</b> </MDBModalHeader>
+                        <MDBModalBody>
+                            <MDBInput 
+                                label="Categoria" 
+                                value={this.state.editarModal.titulo}
+                                onChange={this.atualizaEditarModalTitulo.bind(this)} 
+                            />
+                        </MDBModalBody>
+                        <MDBModalFooter>
+                            <MDBBtn color="secondary" onClick={this.toggle}>Fechar</MDBBtn>
+                            <MDBBtn color="primary" type="submit">Alterar</MDBBtn>
+                        </MDBModalFooter>
+                        </MDBModal>
+                    </form>
+                </MDBContainer>
+```
+
+> Após isto feito, criamos nosso método *salvarAlteracoes*:
+```jsx
+    salvarAlteracoes = (event) => {
+
+        event.preventDefault();
+        console.log(this.state.editarModal);
+
+        fetch("http://localhost:5000/api/categoria/"+this.state.editarModal.categoriaId, {
+           method : "PUT",
+           body: JSON.stringify(this.state.editarModal),
+           headers : { 
+               "Content-Type" : "application/json"
+           }
+        })
+        .then(response => response.json())
+        .then(
+            setTimeout(() => {
+                this.listaAtualizada()
+            }, 1000)
+        )
+        .catch(error => console.log(error))        
+
+        // FecharModal
+        this.toggle();
+    }
+```
+
+> Damos o *bind* de *salvarAlteracoes* dentro do construtor para deixar o método dentro do mesmo contexto:
+```jsx
+        this.cadastrarCategoria = this.cadastrarCategoria.bind(this);
+        this.deletarCategoria   = this.deletarCategoria.bind(this);
+        this.salvarAlteracoes   = this.salvarAlteracoes.bind(this);
+```
+
+

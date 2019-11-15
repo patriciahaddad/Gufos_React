@@ -9,6 +9,10 @@ import './assets/css/flexbox.css';
 import './assets/css/reset.css';
 import './assets/css/style.css';
 
+// React Material Bootstrap
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
 
 
 // Importamos as dependências necessárias:

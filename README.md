@@ -243,13 +243,6 @@ class Categorias extends Component {
 export default Categorias;
 ```
 
-> Em *index.js* importamos os estilos:
-```jsx
-// Importamos os estilos:
-import './assets/css/flexbox.css';
-import './assets/css/reset.css';
-import './assets/css/style.css';
-```
 
 <br><br>
 
@@ -643,6 +636,15 @@ componentWillMount(){
 ```bash
 npm install --save mdbreact
 ```
+
+> Em *index.js* importamos os estilos:
+```jsx
+// Importamos os estilos:
+import './assets/css/flexbox.css';
+import './assets/css/reset.css';
+import './assets/css/style.css';
+```
+
 > Importamos para o *index.js* 
 ```jsx
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -832,4 +834,67 @@ import { MDBInput } from "mdbreact";
         this.salvarAlteracoes   = this.salvarAlteracoes.bind(this);
 ```
 
+
+# Loading e Mensagem de Erros
+
+## Biblioteca - Font-Awesome
+> Importamos para a nossa *index.html* no public o Font-Awesome, procurando sua CDN no Google:
+```html
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+```
+
+## Loading
+> Dentro de **Categorias.js** definimos um state chamado ***loading*** <br>
+> Dentro da lista atualizada colocamos nosso script, antes e depois do fetch, como ***true*** e ***false***:
+```jsx
+    listaAtualizada = () =>{
+
+        this.setState({ loading : true});
+
+        fetch("http://localhost:5000/api/categoria")
+            .then(response => response.json())
+            .then(data => {
+                this.setState( {lista: data } )
+                this.setState({ loading : false});
+            })
+            .catch(error => {
+                this.setState({ loading : false});
+                console.log(error);
+            })
+    }
+```
+
+> Logo abaixo da div da tabela, colocamos nossa veirifcação para mostrar o Loading:
+```jsx
+    {loading && <i className="fa fa-spin fa-spinner fa-2x"></i>}
+```
+
+## Mensagem de Erros
+> Criamos um state chamado ***erroMsg*** , com conteúdo vazio:
+```jsx
+        this.state = {
+            lista : [],
+            nome : "",
+            loading: false,
+            erroMsg : "",
+            modal: false,
+            editarModal : {
+                categoriaId: "",
+                titulo: ""
+            }          
+        }
+```
+
+> Agora damos a condição para ele aparecer caso tenha conteúdo:
+```jsx
+{this.state.erroMsg && <div className="text-danger">{this.state.erroMsg}</div>}
+```
+
+> Agora em deletarCategoria colocamos uma mensagem no catch, para que ele diga que não é possível excluir o item pois deve existir amarrções no banco:
+```jsx
+        .catch(error => {
+            console.log(error)
+            this.setState({ erroMsg : "Não foi possível excluir, verifique se não há eventos cadastrados nesta Categoria" })
+        })
+```
 

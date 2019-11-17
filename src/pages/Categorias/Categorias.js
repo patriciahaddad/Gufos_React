@@ -14,6 +14,7 @@ class Categorias extends Component {
             lista : [],
             nome : "",
             loading: false,
+            erroMsg : "",
             modal: false,
             editarModal : {
                 categoriaId: "",
@@ -53,13 +54,19 @@ class Categorias extends Component {
     }
 
     listaAtualizada = () =>{
-        this.setState( {loading: true} )
+
+        this.setState({ loading : true});
 
         fetch("http://localhost:5000/api/categoria")
             .then(response => response.json())
-            .then(data => this.setState( {lista: data } ));
-        
-        this.setState( {loading: false} )    
+            .then(data => {
+                this.setState( {lista: data } )
+                this.setState({ loading : false});
+            })
+            .catch(error => {
+                this.setState({ loading : false});
+                console.log(error);
+            })
     }
 
     alterarCategoria = (produto) => {
@@ -101,9 +108,10 @@ class Categorias extends Component {
     }
 
     deletarCategoria = (id) =>{
-
+        
+        this.setState({ erroMsg : "" })
+        
         console.log("Excluindo");
-        this.setState( {loading: true} ) 
         
         fetch("http://localhost:5000/api/categoria/"+id, {
            method : "DELETE",
@@ -117,9 +125,10 @@ class Categorias extends Component {
             this.listaAtualizada();
             this.setState( () => ({ lista: this.state.lista }));
         })
-        .catch(error => console.log(error))
-
-        this.setState( {loading: false} ) 
+        .catch(error => {
+            console.log(error)
+            this.setState({ erroMsg : "Não foi possível excluir, verifique se não há eventos cadastrados nesta Categoria" })
+        })
     }
 
     atualizaNome(input){
@@ -176,9 +185,7 @@ class Categorias extends Component {
                 <main className="conteudoPrincipal">
                     <section className="conteudoPrincipal-cadastro">
                     <h1 className="conteudoPrincipal-cadastro-titulo">Categorias</h1>
-
-                    <h2>{ loading && <i className="fa fa-spin fa-spinner"></i> }</h2>
-
+                    
                     <div className="container" id="conteudoPrincipal-lista">
                         <table id="tabela-lista">
                         <thead>
@@ -207,6 +214,9 @@ class Categorias extends Component {
                         </tbody>
                         </table>
                     </div>
+
+                    {loading && <i className="fa fa-spin fa-spinner fa-2x"></i>}
+                    {this.state.erroMsg && <div className="text-danger">{this.state.erroMsg}</div>}
 
                     <div className="container" id="conteudoPrincipal-cadastro">
                         <h2 className="conteudoPrincipal-cadastro-titulo">

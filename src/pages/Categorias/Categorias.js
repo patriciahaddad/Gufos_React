@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import Rodape from '../../components/Rodape/Rodape';
 
-// Importamos nosso logo dos Assets
-import logo from '../../assets/img/icon-login.png';
-
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBInput } from 'mdbreact';
 
 class Categorias extends Component {
@@ -172,15 +169,6 @@ class Categorias extends Component {
 
         return(
             <div className="App">
-                <header className="cabecalhoPrincipal">
-                    <div className="container">
-                    <img src={logo} alt="Logo Gufos" />
-
-                    <nav className="cabecalhoPrincipal-nav">
-                        Administrador
-                    </nav>
-                    </div>
-                </header>
 
                 <main className="conteudoPrincipal">
                     <section className="conteudoPrincipal-cadastro">

@@ -20,6 +20,7 @@ import {Route, BrowserRouter as Router, Switch} from 'react-router-dom';
 
 // Importamos as páginas criadas
 import Categorias from './pages/Categorias/Categorias';
+import Eventos from './pages/Eventos/Eventos';
 import NaoEncontrada from './pages/NaoEncontrada/NaoEncontrada';
 
 // Realizamos a criação das Rotas:
@@ -29,6 +30,7 @@ const Rotas = (
             <Switch>
                 <Route exact path="/" component={ () => <App titulo_pagina="Inicio | Gufos" /> } />
                 <Route path="/categorias" component={ () => <Categorias titulo_pagina="Categorias | Gufos" /> } />
+                <Route path="/eventos" component={ () => <Eventos titulo_pagina="Eventos | Gufos" /> } />
                 <Route component={ () => <NaoEncontrada titulo_pagina="404 | Gufos" /> } />
             </Switch>
         </div>

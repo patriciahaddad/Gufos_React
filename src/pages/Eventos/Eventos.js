@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Rodape from '../../components/Rodape/Rodape';
 
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBInput } from 'mdbreact';
+import Cabecalho from '../../components/Cabecalho/Cabecalho';
 
 class Eventos extends Component {
 
@@ -57,6 +58,7 @@ class Eventos extends Component {
     render(){
         return(
             <div>
+                <Cabecalho/>
                 <main className="conteudoPrincipal">
                 <section className="conteudoPrincipal-cadastro">
                     <h1 className="conteudoPrincipal-cadastro-titulo">Eventos</h1>

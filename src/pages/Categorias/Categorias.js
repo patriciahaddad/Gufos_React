@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Rodape from '../../components/Rodape/Rodape';
 
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBInput } from 'mdbreact';
+import Cabecalho from '../../components/Cabecalho/Cabecalho';
 
 class Categorias extends Component {
 
@@ -169,7 +170,7 @@ class Categorias extends Component {
 
         return(
             <div className="App">
-
+                <Cabecalho/>
                 <main className="conteudoPrincipal">
                     <section className="conteudoPrincipal-cadastro">
                     <h1 className="conteudoPrincipal-cadastro-titulo">Categorias</h1>

@@ -22,6 +22,7 @@ import {Route, BrowserRouter as Router, Switch} from 'react-router-dom';
 import Categorias from './pages/Categorias/Categorias';
 import Eventos from './pages/Eventos/Eventos';
 import NaoEncontrada from './pages/NaoEncontrada/NaoEncontrada';
+import Login from './pages/Login/Login';
 
 // Realizamos a criação das Rotas:
 const Rotas = (
@@ -29,8 +30,11 @@ const Rotas = (
         <div>
             <Switch>
                 <Route exact path="/" component={ () => <App titulo_pagina="Inicio | Gufos" /> } />
-                <Route path="/categorias" component={ () => <Categorias titulo_pagina="Categorias | Gufos" /> } />
+                {/* <Route path="/categorias" component={ () => <Categorias titulo_pagina="Categorias | Gufos" /> } /> */}
+                <Route path="/categorias" component={Categorias} />
                 <Route path="/eventos" component={ () => <Eventos titulo_pagina="Eventos | Gufos" /> } />
+                {/* <Route path="/login" component={ () => <Login titulo_pagina="Login | Gufos"/> } /> */}
+                <Route path="/login" component={Login} />
                 <Route component={ () => <NaoEncontrada titulo_pagina="404 | Gufos" /> } />
             </Switch>
         </div>

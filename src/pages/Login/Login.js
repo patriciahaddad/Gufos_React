@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import '../../assets/css/login.css'
 import Axios from 'axios' // Importando o axios
 import { parseJwt } from '../../services/auth';
+import api from '../../services/api';
 
 export default class Login extends Component {
     constructor(props) {
@@ -29,18 +30,24 @@ export default class Login extends Component {
         // Define que uma requisição está em andamento
         this.setState({ isLoading : true })
 
-        let config = {
-            headers: {
-                "Content-Type":"application/json",
-                "Access-Control-Allow-Origin":"*" // Cors
-            }
+        // let config = {
+        //     headers: {
+        //         "Content-Type":"application/json",
+        //         "Access-Control-Allow-Origin":"*" // Cors
+        //     }
+        // }
+
+        // Axios.post("http://localhost:5000/api/login", {
+        //     email : this.state.email,
+        //     senha : this.state.senha
+        // }, config)
+
+        let usuario = {
+            email: this.state.email,
+            senha: this.state.senha
         }
-
-        Axios.post("http://localhost:5000/api/login", {
-            email : this.state.email,
-            senha : this.state.senha
-        }, config)
-
+        
+        api.post("/login", usuario)
         .then(response => {
             // console.log("Retorno do login: ", response);
             // console.log("Retorno do login: ", response.status);
@@ -72,10 +79,10 @@ export default class Login extends Component {
 
                 if (parseJwt().Role === 'Administrador') {
                     //console.log(this.props)
-                    this.props.history.push('/categorias')
+                    this.props.history.push('/categorias');
                 }
                 else {
-                    this.props.history.push('/eventos')
+                    this.props.history.push('/eventos');
                 }
             }
             

@@ -3,22 +3,12 @@ import './App.css';
 // Importamos nosso componente
 import Rodape from './components/Rodape/Rodape';
 import logo from './assets/img/icon-login.png';
+import Cabecalho from './components/Cabecalho/Cabecalho';
 
 function App() {
   return (
     <div>
-      <header className="cabecalhoPrincipal">
-        <div className="container">
-          <img src={logo} alt="Logo" />
-
-          <nav className="cabecalhoPrincipal-nav">
-            <a href="/">Home</a>
-            <a href="/eventos">Eventos</a>
-            <a href="/categorias">Categorias</a>
-            <a className="cabecalhoPrincipal-nav-login" href="login.html">Login</a>
-          </nav>
-        </div>
-      </header>
+      <Cabecalho/>
 
       <section className="conteudoImagem">
         <div>

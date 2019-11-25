@@ -27,14 +27,14 @@ class Cabecalho extends Component {
                             // Se o usuário for admnistrador
                             <>
                                 <Link to="/categorias">Categorias</Link>
-                                <a onClick={this.logout}>Sair</a>
+                                <a href="/#" onClick={this.logout}>Sair</a>
                             </>
                         ) : (
                                 usuarioAutenticado() && parseJwt().Role === "Aluno" ? (
                                     // Se o usuário for Aluno
                                     <React.Fragment>
                                         <Link to="/eventos">Eventos</Link>
-                                        <a onClick={this.logout}>Sair</a>
+                                        <a href="/#" onClick={this.logout}>Sair</a>
                                     </React.Fragment>
                                 ) : (
                                         // Se o usuário não estiver logado

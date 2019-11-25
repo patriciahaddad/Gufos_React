@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import '../../assets/css/login.css'
-import Axios from 'axios' // Importando o axios
 import { parseJwt } from '../../services/auth';
 import api from '../../services/api';
 

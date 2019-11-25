@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 // Importamos nosso componente
 import Rodape from './components/Rodape/Rodape';
-import logo from './assets/img/icon-login.png';
 import Cabecalho from './components/Cabecalho/Cabecalho';
 
 function App() {

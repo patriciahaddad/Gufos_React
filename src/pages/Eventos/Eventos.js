@@ -31,8 +31,7 @@ export default class Eventos extends Component{
                 localizacaoId: "",
             },
 
-            erroMsg : ""
-
+            erroMsg : "",
         }
 
     }
